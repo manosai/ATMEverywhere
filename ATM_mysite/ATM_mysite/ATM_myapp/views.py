@@ -17,8 +17,12 @@ def aws_connect():
     return conn
 
 def login(request):
-    email = request.GET['email']
-    password = request.GET['password']
+    email = request.POST['email']
+    password = request.POST['password']
+	
+	# store email to the session
+	request.session['email'] = email
+
     conn = aws_connect()
     user_domain = conn.get_domain('user_table')
     current_attrs = user_domain.get_item(email, consistent_read=True)
@@ -34,7 +38,6 @@ def login(request):
 
 #submits user's request for desired withdrawl
 def submit_request(request):
-    email = request.GET['email']
     request_id = email + "_" + str(datetime.now())
     amount = request.GET['amount']
     time_frame = request.GET['time_frame']
