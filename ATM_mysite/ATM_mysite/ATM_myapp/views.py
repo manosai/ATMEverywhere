@@ -19,10 +19,8 @@ def aws_connect():
 def login(request):
     email = request.POST['email']
     password = request.POST['password']
-	
-	# store email to the session
-	request.session['email'] = email
-
+    # store email to the session
+    request.session['email'] = email
     conn = aws_connect()
     user_domain = conn.get_domain('user_table')
     current_attrs = user_domain.get_item(email, consistent_read=True)
