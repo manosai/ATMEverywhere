@@ -10,30 +10,32 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 import boto.sdb
 
-escrow_venmo_account = None
-
 def aws_connect():
     conn = boto.sdb.connect_to_region('us-east-1',\
             aws_access_key_id=os.environ['aws_access_key_id'], \
             aws_secret_access_key=os.environ['aws_secret_access_key'])
     return conn
 
-#user id is the user's email
 def login(request):
     email = request.GET['email']
-    access_token = request.GET['access_token']
-    response = {'email': email}
+    password = request.GET['password']
+    conn = aws_connect()
+    user_domain = conn.get_domain('user_table')
+    current_attrs = user_domain.get_item(email, consistent_read=True)
+    if current_attrs == None:
+        attrs = {'password':password}
+        user_domain.put_attributes(email, attrs)
+    else:
+        if current_attrs['password'] != password:
+            response = {'success': False}
+    response = {'success': True}
     json_response = json.dumps(response)
     return HttpResponse(json_response)
 
-#sent payment using Venmo API
-def send_payment(conn, sender, receiver):
-    return None
-
 #submits user's request for desired withdrawl
 def submit_request(request):
-    user_id = request.GET['user_id']
-    request_id = user_id + "_" + str(datetime.now())
+    email = request.GET['email']
+    request_id = email + "_" + str(datetime.now())
     amount = request.GET['amount']
     time_frame = request.GET['time_frame']
     location = request.GET['location']
