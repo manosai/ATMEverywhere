@@ -17,7 +17,7 @@ def aws_connect():
     return conn
 
 def login(request):
-    print request
+    print request.body
     data=json.loads(request.body)
     email = data['email']
     password = data['password']
