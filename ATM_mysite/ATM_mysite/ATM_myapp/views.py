@@ -22,6 +22,10 @@ def aws_connect():
 def login(request):
     email = request.GET['email']
     access_token = request.GET['access_token']
+	
+	# store the access_token for later use
+	request.session['acces_token'] = access_token
+
     response = {'email': email}
     json_response = json.dumps(response)
     return HttpResponse(json_response)
