@@ -1,6 +1,8 @@
 ATMEverywhere
 =============
 
-CIS 399 Fall 2013 Final Project
+ATMEverywhere
+
+CIS 399 Fall Project: ATMEverywhere
 
 By: Matthew Buechler, Manosai Eerabathini, Sunny Shah
