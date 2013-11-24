@@ -25,6 +25,7 @@ def login(request):
 	
 	# store the access_token for later use
 	request.session['acces_token'] = access_token
+	request.session['email'] = email 
 
     response = {'email': email}
     json_response = json.dumps(response)
