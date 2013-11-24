@@ -17,7 +17,7 @@ def aws_connect():
                 aws_access_key_id=os.environ['aws_access_key_id'], \
                 aws_secret_access_key=os.environ['aws_secret_access_key'])
         return conn
-        
+
 #user id is the user's email
 def login(request):
 	return None
@@ -33,6 +33,7 @@ def submit_request(request):
 	amount = request.GET['amount']
 	time_frame = request.GET['time_frame']
 	location = request.GET['location']
+	#gather all current ATM locations, filter by acceptable geographical radius
 
 #send withdrawl request to list of available ATMs
 def send_ATM_request(sender_user_id, receiver_ATM_ids, message):
@@ -60,12 +61,20 @@ def initiate_transaction(request):
 def start_message_thread():
 	return None
 
+#increment is_verified column in transaction_table by 1
 def verify_transaction(request):
 	#check if transaction is verified from both parties
+	#verified if is_verified column == 2
 	send_payment(escrow_venmo_account, ATM_id)
+
+#submit 1-5 star transaction rating
+def finish_transaction(request):
+	# add score to transaction_ratings column in user_table 
+	return None
 
 def calculate_ATM_fee():
 	return None
+
 
 
 
