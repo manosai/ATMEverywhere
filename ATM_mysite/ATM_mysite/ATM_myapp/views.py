@@ -17,8 +17,9 @@ def aws_connect():
     return conn
 
 def login(request):
-    email = request.POST['email']
-    password = request.POST['password']
+    print request
+    email = request.GET['email']
+    password = request.GET['password']
     # store email to the session
     request.session['email'] = email
     conn = aws_connect()
