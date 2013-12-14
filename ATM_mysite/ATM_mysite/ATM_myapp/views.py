@@ -37,7 +37,7 @@ def login(request):
 
 #submits user's request for desired withdrawl
 def submit_request(request):
-    request_id = request.session.GET['email'] + "_" + str(datetime.now())
+    request_id = request.session.get['email'] + "_" + str(datetime.now())
     amount = request.GET['amount']
     time_frame = request.GET['delivery_time']
     latitude, longitude = request.GET['latitude'], request.GET['longitude']
