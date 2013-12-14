@@ -19,10 +19,6 @@ def aws_connect():
     return conn
 
 def login(request):
-    x = 0
-    while x < 5:
-        x += 1
-        time.sleep(2)
     return HttpResponse("Hello")
     email = request.GET['email']
     password = request.GET['password']
