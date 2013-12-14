@@ -51,9 +51,10 @@ def submit_request(request):
 # helper function that returns the 5 closest ATMs to requester's current location
 # returns ATM_id, distance
 def get_ATMs(latitude, longitude):
+    requester = request.session.get['email']
     conn = aws_connect()
     user_domain = conn.get_domain('user_table')
-    query = 'select * from `user_table`'
+    query = 'select * from `user_table` where name!= %s' % requester
     rs = user_domain.select(query)
     output = {}
     for result in rs:
