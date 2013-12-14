@@ -4,6 +4,7 @@ import requests
 import urllib
 import math
 from datetime import datetime
+from math import radians, cos, sin, asin, sqrt
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -35,7 +36,7 @@ def login(request):
     json_response = json.dumps(response)
     return HttpResponse(json_response)
 
-#submits user's request for desired withdrawl
+#submits user's request for desired withdrawal
 def submit_request(request):
     request_id = request.session.get['email'] + "_" + str(datetime.now())
     amount = request.GET['amount']
@@ -46,7 +47,47 @@ def submit_request(request):
     json_response = json.dumps(response)
     return HttpResponse(response)
 
-#send withdrawl request to list of available ATMs
+# helper function that returns the 5 closest ATMs to requester's current location
+# returns ATM_id, distance
+def get_ATMs(latitude, longitude):
+    conn = aws_connect()
+    user_domain = conn.get_domain('user_table')
+    query = 'select * from `user_table`'
+    rs = user_domain.select(query)
+    output = {}
+    for result in rs:
+        ATM_latitude = result['latitude']
+        ATM_longitude = result['longitude']
+        ATM_rating = result['rating']
+        distance = haversine(latitude, longitude, ATM_latitude, ATM_longitude)
+        ATM_name = result.name
+        output[distance] = (ATM_name, ATM_rating)
+
+    distances = sorted(output.keys())
+    final_output = {}
+    x = 0
+    for dist in distances:
+        if x < 5: 
+            final_output[output[dist]] = dist
+            x = x + 1
+    return final_output
+
+# Calculate the great circle distance between two points 
+# on the earth (specified in decimal degrees)
+def haversine(lon1, lat1, lon2, lat2):
+
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km
+
+
+#send withdrawal request to list of available ATMs
 def send_ATM_request(sender_user_id, receiver_ATM_ids, message):
     return None
 
