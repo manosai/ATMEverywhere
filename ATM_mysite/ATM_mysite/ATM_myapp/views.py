@@ -29,11 +29,10 @@ def login(request):
     if current_attrs == None:
         attrs = {'password':password}
         user_domain.put_attributes(email, attrs)
-        conn.close()
+        response = {'success': True}
     else:
         if current_attrs['password'] != password:
             response = {'success': False}
-    response = {'success': True}
     json_response = json.dumps(response)
     return HttpResponse(json_response)
 
