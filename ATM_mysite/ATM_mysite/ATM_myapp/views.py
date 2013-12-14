@@ -27,6 +27,7 @@ def login(request):
     if current_attrs == None:
         attrs = {'password':password}
         user_domain.put_attributes(email, attrs)
+        conn.close()
     else:
         if current_attrs['password'] != password:
             response = {'success': False}
@@ -36,7 +37,7 @@ def login(request):
 
 #submits user's request for desired withdrawl
 def submit_request(request):
-    request_id = email + "_" + str(datetime.now())
+    request_id = request.GET['email'] + "_" + str(datetime.now())
     amount = request.GET['amount']
     time_frame = request.GET['delivery_time']
     latitude, longitude = request.GET['latitude'], request.GET['longitude']
