@@ -41,6 +41,9 @@ def submit_request(request):
     time_frame = request.GET['delivery_time']
     latitude, longitude = request.GET['latitude'], request.GET['longitude']
     #gather all current ATM locations, filter by acceptable geographical radius
+    response = {'success': True}
+    json_response = json.dumps(response)
+    return HttpResponse(response)
 
 #send withdrawl request to list of available ATMs
 def send_ATM_request(sender_user_id, receiver_ATM_ids, message):
