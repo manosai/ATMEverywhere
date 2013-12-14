@@ -17,7 +17,6 @@ def aws_connect():
     return conn
 
 def login(request):
-    print request
     email = request.GET['email']
     password = request.GET['password']
     # store email to the session
@@ -39,8 +38,8 @@ def login(request):
 def submit_request(request):
     request_id = email + "_" + str(datetime.now())
     amount = request.GET['amount']
-    time_frame = request.GET['time_frame']
-    location = request.GET['location']
+    time_frame = request.GET['delivery_time']
+    latitude, longitude = request.GET['latitude'], request.GET['longitude']
     #gather all current ATM locations, filter by acceptable geographical radius
 
 #send withdrawl request to list of available ATMs
