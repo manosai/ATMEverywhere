@@ -3,6 +3,7 @@ import os
 import requests
 import urllib
 import math
+import time
 from datetime import datetime
 from math import radians, cos, sin, asin, sqrt
 
@@ -18,6 +19,10 @@ def aws_connect():
     return conn
 
 def login(request):
+    x = 0
+    while x < 5:
+        x += 1
+        time.sleep(2)
     return HttpResponse("Hello")
     email = request.GET['email']
     password = request.GET['password']
