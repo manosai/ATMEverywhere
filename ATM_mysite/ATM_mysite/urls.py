@@ -14,5 +14,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^login$', 'ATM_mysite.ATM_myapp.views.login', name='login')
+    url(r'^login$', 'ATM_mysite.ATM_myapp.views.login', name='login'),
+    url(r'^submit_request$', 'ATM_mysite.ATM_myapp.views.submit_request', name='submit_request'),
+
 )
