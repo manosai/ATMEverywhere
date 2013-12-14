@@ -19,7 +19,7 @@ def aws_connect():
     return conn
 
 def login(request):
-    return HttpResponse("Hello")
+    return HttpResponse(json.dumps({"Hello":true}), content_type="application/json")
     email = request.GET['email']
     password = request.GET['password']
     # store email to the session
@@ -78,7 +78,6 @@ def get_ATMs(latitude, longitude):
 # Calculate the great circle distance between two points 
 # on the earth (specified in decimal degrees)
 def haversine(lon1, lat1, lon2, lat2):
-
     # convert decimal degrees to radians 
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
     # haversine formula 
