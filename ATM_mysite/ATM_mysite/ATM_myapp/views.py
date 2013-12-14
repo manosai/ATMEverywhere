@@ -19,7 +19,7 @@ def aws_connect():
     return conn
 
 def login(request):
-    return HttpResponse(json.dumps({"Hello":true}), content_type="application/json")
+    return HttpResponse(json.dumps({"Hello":True}), content_type="application/json")
     email = request.GET['email']
     password = request.GET['password']
     # store email to the session
